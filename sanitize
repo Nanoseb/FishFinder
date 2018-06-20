@@ -1,0 +1,27 @@
+#!/usr/bin/env perl
+
+#input: raw burst bits (4x oversampled)
+#output: cut & downsampled frames with valid preamble
+
+$|=1; # unbuffered I/O
+
+while(<>){
+	# search for preamble
+	s/.*?(.11..11..00..00..00..11..11..11..00..00..00..11.)/$1/ && 
+	do {
+		# do downsampling
+		s{.(..).}{ # check "middle" two bits
+			if ($1 eq "00"){
+				"_"
+			}elsif($1 eq "11"){
+				"1"
+			}else{
+				"z"
+			};
+		}ge;
+
+		#cut to lentgh
+		print substr($_,0,190),"\n";
+	}
+}
+
