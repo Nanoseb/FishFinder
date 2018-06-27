@@ -21,7 +21,8 @@ while(<>){
 		}ge;
 
 		#cut to lentgh
-		print substr($_,0,190),"\n";
+		chomp;
+		print substr($_,0,110),"\n";
 	}
 }
 
